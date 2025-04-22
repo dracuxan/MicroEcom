@@ -1,0 +1,9 @@
+schema: schema.graphql
+
+models:
+  Account:
+    model: github.com/dracuxan/MicroEcom/graph_routes.Account
+
+    fields:
+      orders:
+        resolver: true
