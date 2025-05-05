@@ -1,8 +1,0 @@
-services:
-  account:
-  catalog:
-  order:
-  graph_routes:
-  account_db:
-  catalog_db:
-  order_db:
