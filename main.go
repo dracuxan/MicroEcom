@@ -1,24 +1,26 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"log"
 	"net/http"
+	"os"
+
+	"MicroEcom/handlers"
 )
 
-func greet(w http.ResponseWriter, r *http.Request) {
-	d, err := io.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "fucl", http.StatusBadRequest)
-		return
-	}
-
-	log.Printf("Data received: %s\n", d)
-	fmt.Fprintf(w, "Hello %s!\n", d)
-}
+const PORT = ":9090"
 
 func main() {
-	http.HandleFunc("/", greet)
-	http.ListenAndServe(":9090", nil)
+	l := log.New(os.Stdout, "api: ", log.LstdFlags)
+
+	h := handlers.NewHello(l)
+	b := handlers.NewBye(l)
+
+	sm := http.NewServeMux()
+
+	sm.Handle("/", h)
+	sm.Handle("/bye", b)
+
+	l.Printf("listening on https://localhost%s\n", PORT)
+	http.ListenAndServe(PORT, sm)
 }
