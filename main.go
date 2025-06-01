@@ -15,12 +15,10 @@ const PORT = ":9090"
 
 func main() {
 	l := log.New(os.Stdout, "api: ", log.LstdFlags)
-	h := handlers.NewHello(l)
-	b := handlers.NewBye(l)
+	ph := handlers.NewProducts(l)
 
 	sm := http.NewServeMux()
-	sm.Handle("/", h)
-	sm.Handle("/bye", b)
+	sm.Handle("/", ph)
 
 	s := &http.Server{
 		Addr:         PORT,
