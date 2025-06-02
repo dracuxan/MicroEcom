@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/go-openapi/runtime/middleware"
 	"github.com/gorilla/mux"
 
 	"MicroEcom/handlers"
@@ -23,7 +24,7 @@ func main() {
 	sm := mux.NewRouter()
 
 	getRouter := sm.Methods(http.MethodGet).Subrouter()
-	getRouter.HandleFunc("/", ph.GetProducts)
+	getRouter.HandleFunc("/products", ph.GetProducts)
 
 	postRouter := sm.Methods(http.MethodPost).Subrouter()
 	postRouter.HandleFunc("/", ph.AddProduct)
@@ -32,6 +33,11 @@ func main() {
 	putRouter := sm.Methods(http.MethodPut).Subrouter()
 	putRouter.HandleFunc("/{id:[0-9]+}", ph.UpdateProduct)
 	putRouter.Use(ph.MiddelwarePoroductValidation)
+
+	ops := middleware.RedocOpts{SpecURL: "/swagger.yaml"}
+	sh := middleware.Redoc(ops, nil)
+	getRouter.Handle("/docs", sh)
+	getRouter.Handle("/swagger.yaml", http.FileServer(http.Dir("./static/")))
 
 	s := &http.Server{
 		Addr:         PORT,
