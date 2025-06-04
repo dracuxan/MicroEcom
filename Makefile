@@ -2,9 +2,9 @@
 
 all: run
 
-run: build
+run:
 	@echo "Running the application..."
-	@./bin/main
+	@go run .
 
 test:
 	@echo "Running tests..."
