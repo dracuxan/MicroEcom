@@ -10,6 +10,10 @@ COPY . .
 # Install necessary dependencies (if any)
 RUN go mod tidy
 
+RUN make install_swagger
+
+RUN make docs
+
 RUN go build -o microecom .
 
 # Expose the port your app runs on
