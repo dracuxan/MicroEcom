@@ -1,5 +1,3 @@
-// Package classification of Product API
-//
 // # Documentation for Product API
 //
 // Schemes: http
@@ -16,22 +14,14 @@ package handlers
 
 import (
 	"log"
-
-	"MicroEcom/db"
 )
 
-// A list of products returned in the response
-// swagger:response productsResponse
-type productsResponseWrapper struct {
-	// All products in the system
-	// in: body
-	Body []db.Product
-}
-
+// A single product returned in the response
 type Products struct {
 	l *log.Logger
 }
 
+// NewProducts creates a new Products handler with the provided logger
 func NewProducts(l *log.Logger) *Products {
 	return &Products{l}
 }

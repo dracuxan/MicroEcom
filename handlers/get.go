@@ -6,11 +6,14 @@ import (
 	"MicroEcom/db"
 )
 
-// swagger:route GET /products products getProducts
+// swagger:route GET /products Products getProducts
 // GetProducts handles the retrieval of products.
 // responses:
 //   200: productsResponse
+//   500: errorResponse
+//   405: errorResponse
 
+// GetProducts retrieves all products from the database and writes them to the response.
 func (p *Products) GetProducts(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)

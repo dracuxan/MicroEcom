@@ -27,12 +27,15 @@ func main() {
 	getRouter.HandleFunc("/products", ph.GetProducts)
 
 	postRouter := sm.Methods(http.MethodPost).Subrouter()
-	postRouter.HandleFunc("/", ph.AddProduct)
+	postRouter.HandleFunc("/products", ph.Create)
 	postRouter.Use(ph.MiddelwarePoroductValidation)
 
 	putRouter := sm.Methods(http.MethodPut).Subrouter()
-	putRouter.HandleFunc("/{id:[0-9]+}", ph.UpdateProduct)
+	putRouter.HandleFunc("/products/{id:[0-9]+}", ph.UpdateProduct)
 	putRouter.Use(ph.MiddelwarePoroductValidation)
+
+	deleteRouter := sm.Methods(http.MethodDelete).Subrouter()
+	deleteRouter.HandleFunc("/products/{id:[0-9]+}", ph.DeleteProduct)
 
 	ops := middleware.RedocOpts{SpecURL: "/swagger.yaml"}
 	sh := middleware.Redoc(ops, nil)

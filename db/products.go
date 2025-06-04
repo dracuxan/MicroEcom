@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"slices"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -73,8 +74,22 @@ func (p *Products) ToJson(w io.Writer) error {
 	return e.Encode(p)
 }
 
+func (p *Product) ToJson(w io.Writer) error {
+	e := json.NewEncoder(w)
+	return e.Encode(p)
+}
+
 func GetProducts() Products {
 	return productList
+}
+
+func GetProductById(id int) (*Product, error) {
+	pos, err := findProduct(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return productList[pos], nil
 }
 
 func AddProduct(p *Product) {
@@ -93,6 +108,17 @@ func UpdateProduct(id int, p *Product) error {
 	p.CreatedOn = productList[pos].CreatedOn
 	p.UpdatedOn = time.Now().UTC().String()
 	productList[pos] = p
+	return nil
+}
+
+func DeleteProduct(id int) error {
+	i, err := findProduct(id)
+	if err != nil {
+		return ErrProductNotFound
+	}
+
+	productList = slices.Delete(productList, i, i+1)
+
 	return nil
 }
 

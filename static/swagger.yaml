@@ -2,6 +2,14 @@ basePath: /
 consumes:
     - application/json
 definitions:
+    GenericError:
+        description: GenericError is a generic error message returned in the response
+        properties:
+            message:
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-package: MicroEcom/handlers
     Product:
         properties:
             description:
@@ -24,8 +32,7 @@ definitions:
         type: object
         x-go-package: MicroEcom/db
 info:
-    description: '# Documentation for Product API'
-    title: of Product API
+    title: Documentation for Product API
     version: 1.0.0
 paths:
     /products:
@@ -34,18 +41,87 @@ paths:
             responses:
                 "200":
                     $ref: '#/responses/productsResponse'
+                "405":
+                    $ref: '#/responses/errorResponse'
+                "500":
+                    $ref: '#/responses/errorResponse'
             summary: GetProducts handles the retrieval of products.
             tags:
-                - products
+                - Products
+        post:
+            operationId: createProduct
+            responses:
+                "201":
+                    $ref: '#/responses/newProductResponse'
+                "400":
+                    $ref: '#/responses/errorResponse'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: CreateProduct handles the creation of a new products.
+            tags:
+                - Products
+    /products/{id}:
+        delete:
+            operationId: deleteProduct
+            parameters:
+                - description: The ID of the product to delete
+                  format: int64
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                  x-go-name: ID
+            responses:
+                "200":
+                    $ref: '#/responses/deleteProductResponse'
+                "404":
+                    $ref: '#/responses/errorResponse'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: DeleteProduct deletes a product by ID
+            tags:
+                - Products
+        put:
+            operationId: updateProduct
+            responses:
+                "200":
+                    $ref: '#/responses/updateProductResponse'
+                "404":
+                    $ref: '#/responses/errorResponse'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: UpdateProduct updates a product by ID
+            tags:
+                - Products
 produces:
     - application/json
 responses:
+    deleteProductResponse:
+        description: Response for the delete operation
+        schema:
+            properties:
+                message:
+                    type: string
+                    x-go-name: Message
+            type: object
+    errorResponse:
+        description: Error response for various operations
+        schema:
+            $ref: '#/definitions/GenericError'
+    newProductResponse:
+        description: New product response
+        schema:
+            $ref: '#/definitions/Product'
     productsResponse:
         description: A list of products returned in the response
         schema:
             items:
                 $ref: '#/definitions/Product'
             type: array
+    updateProductResponse:
+        description: Updated product response
+        schema:
+            $ref: '#/definitions/Product'
 schemes:
     - http
 swagger: "2.0"
