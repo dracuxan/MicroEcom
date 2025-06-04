@@ -1,5 +1,5 @@
 services:
-  stocks_info:
+  microecom:
     container_name: microecom
     build: .
     image: microecom:latest

@@ -1,6 +1,7 @@
 # Use lightweight Alpine base image
 FROM golang:1.24-alpine
 
+
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -8,7 +9,7 @@ WORKDIR /app
 COPY . .
 
 # Install necessary dependencies (if any)
-RUN apt-get update && apt-get install -y make
+RUN apk add --no-cache make
 
 RUN go mod tidy
 
