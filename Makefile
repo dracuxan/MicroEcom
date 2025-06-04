@@ -17,27 +17,19 @@ docs:
 	echo "Generating Swagger documentation..."
 	@GO111MODULE=off swagger generate spec -o ./static/swagger.yaml --scan-models
 
-BINARY_NAME=microecom
-BUILD_DIR=build
-DEPLOY_DIR=/var/www/microecom
+build:
+	docker-compose build --no-cache
 
-build: docs
-	@echo "Building the Go binary..."
-	GOOS=linux GOARCH=amd64 go build -o $(BUILD_DIR)/$(BINARY_NAME) main.go
+up:
+	docker-compose up -d
 
-deploy: build
-	@echo "Creating deployment directory..."
-	sudo mkdir -p $(DEPLOY_DIR)
-	sudo cp -r static/swagger.yaml $(DEPLOY_DIR)/static
+down:
+	docker-compose down --remove-orphans
 
-	@echo "Stopping running service..."
-	sudo systemctl stop microecom
+restart: down build up
 
-	@echo "Deploying binary..."
-	sudo cp $(BUILD_DIR)/$(BINARY_NAME) /usr/local/bin/$(BINARY_NAME)
+logs:
+	docker-compose logs -f
 
-	@echo "Restarting service..."
-	sudo systemctl start microecom
-
-clean:
-	rm -rf $(BUILD_DIR)
+ps:
+	docker ps

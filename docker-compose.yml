@@ -1,0 +1,8 @@
+services:
+  stocks_info:
+    container_name: microecom
+    build: .
+    image: microecom:latest
+    ports:
+      - "9090:9090"
+    restart: always
