@@ -9,13 +9,7 @@ WORKDIR /app
 COPY . .
 
 # Install necessary dependencies (if any)
-RUN apk add --no-cache make
-
 RUN go mod tidy
-
-RUN make install_swagger
-
-RUN make docs
 
 RUN go build -o microecom .
 
