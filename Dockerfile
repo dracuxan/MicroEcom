@@ -8,6 +8,8 @@ WORKDIR /app
 COPY . .
 
 # Install necessary dependencies (if any)
+RUN apt-get update && apt-get install -y make
+
 RUN go mod tidy
 
 RUN make install_swagger
