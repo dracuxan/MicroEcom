@@ -14,7 +14,7 @@ import (
 	"MicroEcom/handlers"
 )
 
-const PORT = ":9090"
+const PORT = ":9091"
 
 func main() {
 	l := log.New(os.Stdout, "api: ", log.LstdFlags)
@@ -37,10 +37,10 @@ func main() {
 	deleteRouter := sm.Methods(http.MethodDelete).Subrouter()
 	deleteRouter.HandleFunc("/products/{id:[0-9]+}", ph.DeleteProduct)
 
-	ops := middleware.RedocOpts{SpecURL: "/swagger.yaml"}
+	ops := middleware.RedocOpts{SpecURL: "/docs/swagger.yaml"}
 	sh := middleware.Redoc(ops, nil)
 	getRouter.Handle("/docs", sh)
-	getRouter.Handle("/swagger.yaml", http.FileServer(http.Dir("./static/")))
+	getRouter.Handle("/docs/", http.FileServer(http.Dir("./static/")))
 
 	s := &http.Server{
 		Addr:         PORT,
