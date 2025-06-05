@@ -11,15 +11,27 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+// Product struct defines a product in the inventory.
+// swagger:model
 type Product struct {
-	ID          int     `json:"id"`
-	Name        string  `json:"name"        validate:"required"`
-	Description string  `json:"description"`
-	Price       float64 `json:"price"       validate:"required,gt=0"`
-	SKU         string  `json:"sku"         validate:"required,sku"`
-	CreatedOn   string  `json:"-"`
-	UpdatedOn   string  `json:"-"`
-	DeletedOn   string  `json:"-"`
+	// ID of the product
+	ID int `json:"id"`
+	// Name of the product
+	// required: true
+	Name string `json:"name"        validate:"required"`
+	// Description of the product
+	Description string `json:"description"`
+	// Price of the product
+	// required: true
+	// min:1.00
+	Price float64 `json:"price"       validate:"required,gt=0"`
+	// SKU of the Product
+	// required: true
+	// pattern: [A-Z]+-[0-9]+
+	SKU       string `json:"sku"         validate:"required,sku"`
+	CreatedOn string `json:"-"`
+	UpdatedOn string `json:"-"`
+	DeletedOn string `json:"-"`
 }
 
 type Products []*Product

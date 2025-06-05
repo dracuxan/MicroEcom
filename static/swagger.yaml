@@ -10,25 +10,44 @@ definitions:
                 x-go-name: Message
         type: object
         x-go-package: MicroEcom/handlers
+    GenericMessage:
+        properties:
+            message:
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-package: MicroEcom/handlers
     Product:
         properties:
             description:
+                description: Description of the product
                 type: string
                 x-go-name: Description
             id:
+                description: ID of the product
                 format: int64
                 type: integer
                 x-go-name: ID
             name:
+                description: Name of the product
                 type: string
                 x-go-name: Name
             price:
+                description: Price of the product
                 format: double
+                minimum: 1
                 type: number
                 x-go-name: Price
             sku:
+                description: SKU of the Product
+                pattern: '[A-Z]+-[0-9]+'
                 type: string
                 x-go-name: SKU
+        required:
+            - name
+            - price
+            - sku
+        title: Product struct defines a product in the inventory.
         type: object
         x-go-package: MicroEcom/db
 info:
@@ -37,7 +56,7 @@ info:
 paths:
     /products:
         get:
-            operationId: getProducts
+            operationId: GetProducts
             responses:
                 "200":
                     $ref: '#/responses/productsResponse'
@@ -50,6 +69,14 @@ paths:
                 - Products
         post:
             operationId: createProduct
+            parameters:
+                - description: The product to create
+                  in: body
+                  name: product
+                  required: true
+                  schema:
+                    $ref: '#/definitions/Product'
+                  x-go-name: Product
             responses:
                 "201":
                     $ref: '#/responses/newProductResponse'
@@ -83,6 +110,21 @@ paths:
                 - Products
         put:
             operationId: updateProduct
+            parameters:
+                - description: The ID of the product to update
+                  format: int64
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                  x-go-name: ID
+                - description: The product to update
+                  in: body
+                  name: product
+                  required: true
+                  schema:
+                    $ref: '#/definitions/Product'
+                  x-go-name: Product
             responses:
                 "200":
                     $ref: '#/responses/updateProductResponse'
@@ -99,19 +141,15 @@ responses:
     deleteProductResponse:
         description: Response for the delete operation
         schema:
-            properties:
-                message:
-                    type: string
-                    x-go-name: Message
-            type: object
+            $ref: '#/definitions/GenericMessage'
     errorResponse:
         description: Error response for various operations
         schema:
             $ref: '#/definitions/GenericError'
     newProductResponse:
-        description: New product response
+        description: New product response with the product ID
         schema:
-            $ref: '#/definitions/Product'
+            $ref: '#/definitions/GenericMessage'
     productsResponse:
         description: A list of products returned in the response
         schema:
@@ -119,9 +157,9 @@ responses:
                 $ref: '#/definitions/Product'
             type: array
     updateProductResponse:
-        description: Updated product response
+        description: Updated product response with the product ID
         schema:
-            $ref: '#/definitions/Product'
+            $ref: '#/definitions/GenericMessage'
 schemes:
     - http
 swagger: "2.0"

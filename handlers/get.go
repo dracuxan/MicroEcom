@@ -6,7 +6,7 @@ import (
 	"MicroEcom/db"
 )
 
-// swagger:route GET /products Products getProducts
+// swagger:route GET /products Products GetProducts
 // GetProducts handles the retrieval of products.
 // responses:
 //   200: productsResponse

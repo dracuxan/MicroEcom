@@ -24,14 +24,43 @@ type productIDParameterWrapper struct {
 	ID int `json:"id"`
 }
 
+// Payload for creating a new product
+// swagger:parameters createProduct
+type newProductParameterWrapper struct {
+	// The product to create
+	// in: body
+	// required: true
+	Product db.Product `json:"product"`
+}
+
+// ID of the product to update
+// swagger:parameters updateProduct
+type productIDUpdateParameterWrapper struct {
+	// The ID of the product to update
+	// in: path
+	// required: true
+	ID int `json:"id"`
+}
+
+// Payload for updating an existing product
+// swagger:parameters updateProduct
+type updatedProductParameterWrapper struct {
+	// The product to update
+	// in: body
+	// required: true
+	Product db.Product `json:"product"`
+}
+
 // Response for the delete operation
 // swagger:response deleteProductResponse
 type deleteProductResponseWrapper struct {
 	// A message indicating the result of the delete operation
 	// in: body
-	Body struct {
-		Message string `json:"message"`
-	}
+	Body GenericMessage
+}
+
+type GenericMessage struct {
+	Message string `json:"message"`
 }
 
 // Error response for various operations
@@ -42,18 +71,18 @@ type errorResponseWrapper struct {
 	Body GenericError
 }
 
-// Updated product response
+// Updated product response with the product ID
 // swagger:response updateProductResponse
 type updateProductResponseWrapper struct {
-	// The updated product
+	// Message with the updated product ID
 	// in: body
-	Body db.Product
+	Body GenericMessage
 }
 
-// New product response
+// New product response with the product ID
 // swagger:response newProductResponse
 type newProductResponseWrapper struct {
 	// The newly created product
 	// in: body
-	Body db.Product
+	Body GenericMessage
 }
