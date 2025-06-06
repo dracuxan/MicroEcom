@@ -15,11 +15,11 @@ install_swagger:
 
 docs: 
 	echo "Generating Swagger documentation..."
-	@GO111MODULE=off swagger generate spec -o ./static/swagger.yaml --scan-models
+	@swagger generate spec -o ./static/swagger.yaml --scan-models
 
 client:
 	echo "Generating Swagger client..."
-	@GO111MODULE=off swagger generate client -f ../static/swagger.yaml -A microecom
+	@swagger generate client -f ../static/swagger.yaml -A microecom
 
 build:
 	docker-compose build --no-cache

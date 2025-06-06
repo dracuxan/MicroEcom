@@ -1,4 +1,4 @@
-// # Documentation for Product API
+// # Documentation for MicroEcom
 //
 // Schemes: http
 // BasePath: /

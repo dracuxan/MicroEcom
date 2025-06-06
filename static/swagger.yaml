@@ -3,7 +3,7 @@ consumes:
     - application/json
 definitions:
     GenericError:
-        description: GenericError GenericError GenericError is a generic error message returned in the response
+        description: GenericError GenericError GenericError GenericError is a generic error message returned in the response
         properties:
             message:
                 description: message
@@ -12,7 +12,7 @@ definitions:
         type: object
         x-go-package: MicroEcom/sdk/models
     GenericMessage:
-        description: GenericMessage GenericMessage generic message
+        description: GenericMessage GenericMessage GenericMessage generic message
         properties:
             message:
                 description: message
@@ -54,7 +54,7 @@ definitions:
         type: object
         x-go-package: MicroEcom/db
 info:
-    title: Documentation for Product API
+    title: Documentation for MicroEcom
     version: 1.0.0
 paths:
     /products:

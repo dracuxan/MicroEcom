@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// GenericError GenericError GenericError GenericError is a generic error message returned in the response
+// GenericError GenericError GenericError GenericError GenericError is a generic error message returned in the response
 //
 // swagger:model GenericError
 type GenericError struct {

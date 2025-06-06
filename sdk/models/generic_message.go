@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// GenericMessage GenericMessage GenericMessage generic message
+// GenericMessage GenericMessage GenericMessage GenericMessage generic message
 //
 // swagger:model GenericMessage
 type GenericMessage struct {
