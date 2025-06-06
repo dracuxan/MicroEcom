@@ -1,4 +1,4 @@
-.PHONY: all run build
+.PHONY: all run build client
 
 all: run
 
@@ -19,8 +19,7 @@ docs:
 
 client:
 	echo "Generating Swagger client..."
-	@cd sdk
-	@GO111MODULE=off swagger generate client -f ./static/swagger.yaml -A microecom
+	@GO111MODULE=off swagger generate client -f ../static/swagger.yaml -A microecom
 
 build:
 	docker-compose build --no-cache
