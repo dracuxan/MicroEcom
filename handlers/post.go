@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"MicroEcom/db"
@@ -22,14 +24,9 @@ func (p *Products) Create(w http.ResponseWriter, r *http.Request) {
 	db.AddProduct(prod)
 	p.l.Printf("Prod: %#v", prod)
 
-	added, err := db.GetProductById(prod.ID)
-	if err != nil {
-		http.Error(w, "unable to get product", http.StatusInternalServerError)
-		return
-	}
-
-	if err := added.ToJson(w); err != nil {
-		http.Error(w, "unable to marshal json", http.StatusInternalServerError)
-		return
-	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]any{
+		"message": fmt.Sprintf("Product created successfully ID: %d", prod.ID),
+	})
 }

@@ -21,6 +21,7 @@ func (p *Products) GetProducts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	p.l.Println("Handle GET Products")
+	w.Header().Set("Content-Type", "application/json")
 	lp := db.GetProducts()
 
 	if err := lp.ToJson(w); err != nil {

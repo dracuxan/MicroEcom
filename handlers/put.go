@@ -20,6 +20,7 @@ import (
 func (p *Products) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, er := strconv.Atoi(vars["id"])
+	w.Header().Set("Content-Type", "application/json")
 
 	if er != nil {
 		http.Error(w, "unable to convert id", http.StatusBadRequest)

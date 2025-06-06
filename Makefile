@@ -17,6 +17,11 @@ docs:
 	echo "Generating Swagger documentation..."
 	@GO111MODULE=off swagger generate spec -o ./static/swagger.yaml --scan-models
 
+client:
+	echo "Generating Swagger client..."
+	@cd sdk
+	@GO111MODULE=off swagger generate client -f ./static/swagger.yaml -A microecom
+
 build:
 	docker-compose build --no-cache
 
