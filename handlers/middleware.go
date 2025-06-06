@@ -40,7 +40,8 @@ func (p *Products) MiddelwarePoroductValidation(next http.Handler) http.Handler 
 func CorsMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := r.Header.Get("Origin")
-		if origin == "http://localhost:8080" || origin == "http://127.0.0.1:8080" {
+		if origin == "http://localhost:8080" || origin == "http://127.0.0.1:8080" ||
+			origin == "https://microstore.bynisarg.in" || origin == "https://microecom.bynisarg.in" {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
 		}
 
