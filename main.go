@@ -42,6 +42,11 @@ func main() {
 	getRouter.Handle("/docs", sh)
 	getRouter.Handle("/swagger.yaml", http.FileServer(http.Dir("./static/")))
 
+	// cors middleware
+	sm.Use(handlers.CorsMiddleware)
+	sm.Use(mux.CORSMethodMiddleware(sm))
+
+	// create a new server
 	s := &http.Server{
 		Addr:         PORT,
 		Handler:      sm,
